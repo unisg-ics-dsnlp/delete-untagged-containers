@@ -32,16 +32,21 @@ const run = async () => {
       type: type
     })
 
-    console.log(pkg);
     console.log(`Found package id: ${pkg.data.id}`)
     console.log(`Getting ${pkg.data.version_count} package versions`);
 
-    pkg = await octokit.request('GET /{type}/{name}/packages/{package_type}/{package_name}', {
+    versionsResponse = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}', {
       package_type: 'container',
       package_name: packageName,
       name: org,
       type: type
     })
+
+    versions = versionsResponse.data
+
+    versions.forEach(function (item, index) {
+      console.log(item, index);
+    });
 
     // versions = await octokit.request('GET /user/packages/{package_type}/{package_name}/versions', {
     //   package_type: 'package_type',
