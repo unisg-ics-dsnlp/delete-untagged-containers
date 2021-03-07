@@ -63,7 +63,7 @@ const run = async () => {
           })
         }
 
-        console.log(`Status: ${status}`)
+        console.log(`Status: ${status.data.status}`)
       }
     }
 
