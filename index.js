@@ -44,7 +44,7 @@ const run = async () => {
 
     versions = versionsResponse.data
 
-    console.log(versions)
+    console.log(`Versions ${versions}`)
 
     // versions.forEach(function (item, index) {
     //   console.log(item, index);
@@ -55,7 +55,7 @@ const run = async () => {
     //   package_name: 'package_name'
     // })
 
-    core.setOutput("pkg", pkg);
+    // core.setOutput("pkg", pkg);
 
     
   } catch (error) {
