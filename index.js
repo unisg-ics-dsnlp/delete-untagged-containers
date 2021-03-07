@@ -44,7 +44,7 @@ const run = async () => {
 
     versions = versionsResponse.data
 
-    console.log(`Versions ${versions}`)
+    console.log(`Versions ${JSON.stringify(versions, null, 4)}`)
 
     // versions.forEach(function (item, index) {
     //   console.log(item, index);
