@@ -3,6 +3,10 @@ const github = require('@actions/github');
 const { Octokit } = require("@octokit/core");
 const octokit = new Octokit({ auth: core.getInput('token') });
 
+octokit.hook.error("request", async (error, options) => {
+  throw error;
+});
+
 try {
   const packageName = core.getInput('package_name');
   const context = github.context;
