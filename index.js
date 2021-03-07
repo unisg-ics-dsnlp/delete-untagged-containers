@@ -11,7 +11,7 @@ try {
 
   console.log(`Trying to delete untagged versions of ${packageName} from org ${org}`);
   
-  pkg = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}', {
+  pkg = octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}', {
     package_type: 'container',
     package_name: packageName,
     org: org
