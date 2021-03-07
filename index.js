@@ -15,13 +15,19 @@ const run = async () => {
     // Get the org. Default to current org
     org = core.getInput('org') || context.payload.repository.full_name.split('/')[0];
 
-    console.log(`Trying to delete untagged versions of ${packageName} from org ${org}`);
+    console.log(`Payload: ${context.payload}`)
+    console.log(`Checking ig package ${packageName} exists in org ${org}`);
     
-    pkg = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}', {
+    pkg = await octokit.request('GET /users/{org}/packages/{package_type}/{package_name}', {
       package_type: 'container',
       package_name: packageName,
       org: org
     })
+
+    // versions = await octokit.request('GET /user/packages/{package_type}/{package_name}/versions', {
+    //   package_type: 'package_type',
+    //   package_name: 'package_name'
+    // })
 
     console.log(pkg);
     core.setOutput("pkg", pkg);
