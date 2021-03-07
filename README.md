@@ -12,6 +12,10 @@ The organization to delete the packages from (defaults to current org)
 
 **Required:** The name of the package to delete
 
+### `token`
+
+**Required:** Access token to use for deleting packages
+
 ## Outputs
 
 ### `time`

@@ -1,5 +1,10 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+import { Octokit } from "@octokit/core";
+
+const octokit = new Octokit({
+  auth: core.getInput('token'),
+});
 
 try {
   const packageName = core.getInput('package_name');
