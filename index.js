@@ -35,7 +35,7 @@ const run = async () => {
     console.log(`Found package id: ${pkg.data.id}`)
     console.log(`Getting ${pkg.data.version_count} package versions`);
 
-    versionsResponse = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}', {
+    versionsResponse = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}/versions', {
       package_type: 'container',
       package_name: packageName,
       name: org,
@@ -44,11 +44,11 @@ const run = async () => {
 
     versions = versionsResponse.data
 
-    console.log(`Versions ${JSON.stringify(versions, null, 4)}`)
-
-    // versions.forEach(function (item, index) {
-    //   console.log(item, index);
-    // });
+    versions.forEach(function (item, index) {
+      if (item.metadata.container.tags.length == 0) {
+        console.log(`Deleting untagged version: ${item.name}`)
+      }
+    });
 
     // versions = await octokit.request('GET /user/packages/{package_type}/{package_name}/versions', {
     //   package_type: 'package_type',
