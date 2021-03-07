@@ -32,7 +32,9 @@ const run = async () => {
       type: type
     })
 
-    console.log(`Getting ${pkg.version_count} package versions`);
+    console.log(pkg);
+    console.log(`Found package id: ${pkg.data.id}`)
+    console.log(`Getting ${pkg.data.version_count} package versions`);
 
     pkg = await octokit.request('GET /{type}/{name}/packages/{package_type}/{package_name}', {
       package_type: 'container',
@@ -46,7 +48,6 @@ const run = async () => {
     //   package_name: 'package_name'
     // })
 
-    console.log(pkg);
     core.setOutput("pkg", pkg);
 
     
