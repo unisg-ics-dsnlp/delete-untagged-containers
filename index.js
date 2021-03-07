@@ -7,25 +7,29 @@ octokit.hook.error("request", async (error, options) => {
   throw error;
 });
 
-try {
-  const packageName = core.getInput('package_name');
-  const context = github.context;
+const run = async () => {
+  try {
+    const packageName = core.getInput('package_name');
+    const context = github.context;
 
-  // Get the org. Default to current org
-  org = core.getInput('org') || context.payload.repository.full_name.split('/')[0];
+    // Get the org. Default to current org
+    org = core.getInput('org') || context.payload.repository.full_name.split('/')[0];
 
-  console.log(`Trying to delete untagged versions of ${packageName} from org ${org}`);
-  
-  pkg = octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}', {
-    package_type: 'container',
-    package_name: packageName,
-    org: org
-  })
+    console.log(`Trying to delete untagged versions of ${packageName} from org ${org}`);
+    
+    pkg = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}', {
+      package_type: 'container',
+      package_name: packageName,
+      org: org
+    })
 
-  console.log(pkg);
-  core.setOutput("pkg", pkg);
+    console.log(pkg);
+    core.setOutput("pkg", pkg);
 
-  
-} catch (error) {
-  core.setFailed(error.message);
+    
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
+
+run();
