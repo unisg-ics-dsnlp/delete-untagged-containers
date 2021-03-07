@@ -44,9 +44,11 @@ const run = async () => {
 
     versions = versionsResponse.data
 
-    versions.forEach(function (item, index) {
-      console.log(item, index);
-    });
+    console.log(versions)
+
+    // versions.forEach(function (item, index) {
+    //   console.log(item, index);
+    // });
 
     // versions = await octokit.request('GET /user/packages/{package_type}/{package_name}/versions', {
     //   package_type: 'package_type',
