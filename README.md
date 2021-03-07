@@ -4,10 +4,6 @@ Deletes containers that do not have tags from [Github container registry](https:
 
 ## Inputs
 
-### `org`
-
-The organization to delete the packages from (defaults to current org)
-
 ### `package_name`
 
 **Required:** The name of the package to delete

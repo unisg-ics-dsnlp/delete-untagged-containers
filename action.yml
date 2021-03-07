@@ -1,9 +1,6 @@
 name: 'Delete Untagged Containers'
 description: 'Deletes untagged containers from Github conteriner registry (ghcr.io)'
 inputs:
-  org:
-    description: 'The organization to delete the packages from (defaults to current org)'
-    required: false
   package_name:
     description: 'The name of the package to delete'
     required: true

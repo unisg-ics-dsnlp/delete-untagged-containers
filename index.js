@@ -12,16 +12,33 @@ const run = async () => {
     const packageName = core.getInput('package_name');
     const context = github.context;
 
-    // Get the org. Default to current org
-    org = core.getInput('org') || context.payload.repository.full_name.split('/')[0];
+    // Get the current org or user
+    org = context.payload.repository.full_name.split('/')[0];
+
+    // We need to hit a different API depending on whether it's a user or not
+    if (context.payload.repository.owner.type == "User") {
+      type = "user";
+    } else {
+      type = "org";
+    }
 
     console.log(`Payload: ${context.payload}`)
-    console.log(`Checking ig package ${packageName} exists in org ${org}`);
+    console.log(`Checking if package ${packageName} exists in org ${org}`);
     
-    pkg = await octokit.request('GET /users/{org}/packages/{package_type}/{package_name}', {
+    pkg = await octokit.request('GET /{type}/{name}/packages/{package_type}/{package_name}', {
       package_type: 'container',
       package_name: packageName,
-      org: org
+      name: org,
+      type: type
+    })
+
+    console.log(`Getting ${pkg.version_count} package versions`);
+
+    pkg = await octokit.request('GET /{type}/{name}/packages/{package_type}/{package_name}', {
+      package_type: 'container',
+      package_name: packageName,
+      name: org,
+      type: type
     })
 
     // versions = await octokit.request('GET /user/packages/{package_type}/{package_name}/versions', {
