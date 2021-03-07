@@ -22,10 +22,10 @@ const run = async () => {
       type = "org";
     }
 
-    console.log(`Detected or/user type: ${type}`)
+    console.log(`Detected org/user type: ${type}`)
     console.log(`Checking if package ${packageName} exists in ${type} ${org}`);
     
-    pkg = await octokit.request('GET /{type}/{name}/packages/{package_type}/{package_name}', {
+    pkg = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}', {
       package_type: 'container',
       package_name: packageName,
       name: org,
