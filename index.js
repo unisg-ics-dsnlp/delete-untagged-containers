@@ -44,11 +44,28 @@ const run = async () => {
 
     versions = versionsResponse.data
 
-    versions.forEach(function (item, index) {
-      if (item.metadata.container.tags.length == 0) {
-        console.log(`Deleting untagged version: ${item.name}`)
+    for (const version of versions) {
+      if (version.metadata.container.tags.length == 0) {
+        console.log(`Deleting untagged version: ${version.name}`)
+
+        if (type == "user") {
+          status = await octokit.request('DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}', {
+            package_type: 'container',
+            package_name: packageName,
+            package_version_id: version.id
+          })
+        } else {
+          status = await octokit.request('DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}', {
+            package_type: 'container',
+            package_name: packageName,
+            org: org,
+            package_version_id: version.id
+          })
+        }
+
+        console.log(`Status: ${status}`)
       }
-    });
+    }
 
     // versions = await octokit.request('GET /user/packages/{package_type}/{package_name}/versions', {
     //   package_type: 'package_type',
