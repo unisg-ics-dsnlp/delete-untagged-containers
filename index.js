@@ -12,16 +12,22 @@ const run = async () => {
     const packageName = core.getInput('package_name');
     const context = github.context;
 
-    console.log(JSON.stringify(github))
-
-    // Get the current org or user
-    org = context.payload.repository.full_name.split('/')[0];
-
-    // We need to hit a different API depending on whether it's a user or not
-    if (context.payload.repository.owner.type == "User") {
-      type = "user";
-    } else {
+    // Get the current org or user. This will come from either org or user, or
+    // we will try to guess it
+    if (core.getInput('org') != null) {
       type = "org";
+      org_user = core.getInput('org');
+    } else if (core.getInput('user') != null) {
+      type = "user";
+      org_user = core.getInput('user');
+    } else {
+      org_user = context.payload.repository.full_name.split('/')[0];
+      // We need to hit a different API depending on whether it's a user or not
+      if (context.payload.repository.owner.type == "User") {
+        type = "user";
+      } else {
+        type = "org";
+      }
     }
 
     console.log(`Detected org/user type: ${type}`)
@@ -30,7 +36,7 @@ const run = async () => {
     pkg = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}', {
       package_type: 'container',
       package_name: packageName,
-      name: org,
+      name: org_user,
       type: type
     })
 
@@ -40,7 +46,7 @@ const run = async () => {
     versionsResponse = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}/versions', {
       package_type: 'container',
       package_name: packageName,
-      name: org,
+      name: org_user,
       type: type
     })
 
@@ -60,7 +66,7 @@ const run = async () => {
           status = await octokit.request('DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}', {
             package_type: 'container',
             package_name: packageName,
-            org: org,
+            org: org_user,
             package_version_id: version.id
           })
         }

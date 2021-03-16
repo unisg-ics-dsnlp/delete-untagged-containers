@@ -7,9 +7,12 @@ inputs:
   token:
     description: 'Access token to use for deleting packages'
     required: true
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  org:
+    description: 'The name of the org that the containers lives under. Will default to the org of the repo that the payload trigger comes from.'
+    required: false
+  user:
+    description: 'The name of the user that the container lives under.  Will default to the user of the repo that the payload trigger comes from.'
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'
