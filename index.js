@@ -14,10 +14,10 @@ const run = async () => {
 
     // Get the current org or user. This will come from either org or user, or
     // we will try to guess it
-    if (core.getInput('org') != null) {
+    if (core.getInput('org')) {
       type = "org";
       org_user = core.getInput('org');
-    } else if (core.getInput('user') != null) {
+    } else if (core.getInput('user')) {
       type = "user";
       org_user = core.getInput('user');
     } else {
