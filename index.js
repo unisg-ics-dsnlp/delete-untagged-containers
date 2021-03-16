@@ -12,6 +12,8 @@ const run = async () => {
     const packageName = core.getInput('package_name');
     const context = github.context;
 
+    console.log(JSON.stringify(github))
+
     // Get the current org or user
     org = context.payload.repository.full_name.split('/')[0];
 
