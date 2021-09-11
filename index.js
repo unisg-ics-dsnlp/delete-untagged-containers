@@ -41,16 +41,35 @@ const run = async () => {
     })
 
     console.log(`Found package id: ${pkg.data.id}`)
-    console.log(`Getting ${pkg.data.version_count} package versions`);
 
-    versionsResponse = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}/versions', {
-      package_type: 'container',
-      package_name: packageName,
-      name: org_user,
-      type: type
-    });
+    // Note that the API will paginate responses so we need to make sure to
+    // traverse all pages
+    var current_page = 1;
+    var last_page = 1;
+    var versions = [];
 
-    versions = versionsResponse.data
+    do {
+      console.log(`Getting package versions page ${current_page}`);
+
+      versionsResponse = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}/versions', {
+        package_type: 'container',
+        package_name: packageName,
+        name: org_user,
+        type: type,
+        page: current_page,
+        per_page: 100
+      });
+  
+      if (typeof versionsResponse.headers.link == 'string') {
+        // Parse out the page info and update current page to next page 
+        match = versionsResponse.headers.link.match(/\?page=(\d+).*\?page=(\d+)/);
+        current_page = match[1]; // set to next
+        last_page = match[2];    // set to last
+      }
+  
+      // Add the versions to our list
+      versions = versions.concat(versionsResponse.data);
+    } while (current_page != last_page);
 
     // Filter to only untagged containers
     var untagged_versions = versions.filter(version => version.metadata.container.tags.length == 0)
