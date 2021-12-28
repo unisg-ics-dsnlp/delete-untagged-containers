@@ -1,7 +1,9 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { Octokit } = require("@octokit/core");
-const octokit = new Octokit({ auth: core.getInput('token') });
+const octokit = new Octokit({
+  auth: core.getInput('token'),
+});
 
 octokit.hook.error("request", async (error, options) => {
   throw error;
@@ -11,6 +13,16 @@ const run = async () => {
   try {
     const packageName = core.getInput('package_name');
     const context = github.context;
+
+    // Set up logging
+    if (core.getInput('debug')) {
+      octokit.log = {
+        debug: console.debug,
+        info: console.info,
+        warn: console.warn,
+        error: console.error
+      };
+    }
 
     // Get the current org or user. This will come from either org or user, or
     // we will try to guess it
@@ -32,7 +44,7 @@ const run = async () => {
     }
 
     console.log(`Checking if package ${packageName} exists in ${type} ${org_user}`);
-    
+
     pkg = await octokit.request('GET /{type}s/{name}/packages/{package_type}/{package_name}', {
       package_type: 'container',
       package_name: packageName,
