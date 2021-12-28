@@ -14,6 +14,13 @@ Note that this has not been fully tested with non-user orgs as the APIs differ. 
 
 **Required:** Access token to use for deleting packages
 
+### `org`
+
+**Required:** The name of the org that the package belongs to (if an organization, otherwise you can use `user` or rely on automatic detection)
+
+### `user`
+
+**Required:** The name of the user that the package belongs to
 
 ## Example usage
 

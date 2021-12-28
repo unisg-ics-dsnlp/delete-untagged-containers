@@ -45,8 +45,8 @@ const run = async () => {
     // Note that the API will paginate responses so we need to make sure to
     // traverse all pages
     var current_page = 1;
-    var last_page = 1;
-    var versions = [];
+    var last_page    = 1;
+    var versions     = [];
 
     do {
       console.log(`Getting package versions page ${current_page}`);
