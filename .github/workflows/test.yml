@@ -14,4 +14,4 @@ jobs:
         uses: dylanratcliffe/delete-untagged-containers@main
         with:
           package_name: ${{ github.event.inputs.package_name }}
-          token: ${{ secrets.CR_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
