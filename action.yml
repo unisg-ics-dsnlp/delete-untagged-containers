@@ -12,7 +12,10 @@ inputs:
     required: false
   user:
     description: 'The name of the user that the container lives under.  Will default to the user of the repo that the payload trigger comes from.'
-    required: true
+    required: false
+  debug:
+    description: 'Whether to enable debug logging'
+    required: false
 runs:
   using: 'node12'
   main: 'index.js'
