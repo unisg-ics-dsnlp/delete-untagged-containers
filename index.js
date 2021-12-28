@@ -17,7 +17,7 @@ const run = async () => {
     // Set up logging
     if (core.getInput('debug')) {
       octokit.log = {
-        debug: console.debug,
+        debug: console.info,
         info: console.info,
         warn: console.warn,
         error: console.error
