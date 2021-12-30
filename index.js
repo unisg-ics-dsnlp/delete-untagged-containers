@@ -1,28 +1,18 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { Octokit } = require("@octokit/core");
-const octokit = new Octokit({
-  auth: core.getInput('token'),
-});
-
-octokit.hook.error("request", async (error, options) => {
-  throw error;
-});
 
 const run = async () => {
   try {
     const packageName = core.getInput('package_name');
-    const context = github.context;
+    const context     = github.context;
+    const token       = core.getInput('token');
+    const octokit     = github.getOctokit(token)
 
-    // Set up logging
-    if (core.getInput('debug')) {
-      octokit.log = {
-        debug: console.info,
-        info: console.info,
-        warn: console.warn,
-        error: console.error
-      };
-    }
+    octokit.hook.error("request", async (error, options) => {
+      console.error("Request error. Options:")
+      console.error(JSON.stringify(options))
+      throw error;
+    });
 
     // Get the current org or user. This will come from either org or user, or
     // we will try to guess it

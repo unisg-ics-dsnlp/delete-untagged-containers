@@ -1,20 +1,17 @@
 name: 'Delete Untagged Containers'
-description: 'Deletes untagged containers from Github conteriner registry (ghcr.io)'
+description: 'Deletes untagged containers from Github container registry (ghcr.io)'
 inputs:
   package_name:
     description: 'The name of the package to delete'
     required: true
   token:
-    description: 'Access token to use for deleting packages'
+    description: 'Personal access token or GITHUB_TOKEN to use for deleting packages'
     required: true
   org:
     description: 'The name of the org that the containers lives under. Will default to the org of the repo that the payload trigger comes from.'
     required: false
   user:
     description: 'The name of the user that the container lives under.  Will default to the user of the repo that the payload trigger comes from.'
-    required: false
-  debug:
-    description: 'Whether to enable debug logging'
     required: false
 runs:
   using: 'node12'
