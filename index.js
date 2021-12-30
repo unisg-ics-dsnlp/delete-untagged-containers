@@ -9,8 +9,6 @@ const run = async () => {
     const octokit     = github.getOctokit(token)
 
     octokit.hook.error("request", async (error, options) => {
-      console.error("Request error. Options:")
-      console.error(JSON.stringify(options))
       throw error;
     });
 
