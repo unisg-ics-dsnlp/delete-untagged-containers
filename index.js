@@ -89,9 +89,9 @@ const run = async () => {
           package_name: packageName,
           package_version_id: version.id
         }).then((status) => {
-          console.log(`Status: ${status.status}`);
+          console.log(`Package ${version.name} status: ${status.status}`);
         }).catch((reason) => {
-          console.error(`Error: ${reason}`)
+          console.error(`Package ${version.name} error: ${reason}`)
         }));
       } else {
         console.log(`  ORG: ${org_user}`)
@@ -102,9 +102,9 @@ const run = async () => {
           org: org_user,
           package_version_id: version.id
         }).then((status) => {
-          console.log(`Status: ${status.status}`);
+          console.log(`Package ${version.name} status: ${status.status}`);
         }).catch((reason) => {
-          console.error(`Error: ${reason}`)
+          console.error(`Package ${version.name} error: ${reason}`)
         }));
       }
     }
