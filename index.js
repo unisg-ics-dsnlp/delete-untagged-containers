@@ -80,6 +80,8 @@ const run = async () => {
 
     for (const version of untagged_versions) {
       console.log(`Deleting untagged version: ${version.name}`)
+      console.log(`  Package Name: ${packageName}`)
+      console.log(`  Package Version ID: ${version.id}`)
 
       if (type == "user") {
         deletion_promises.push(octokit.request('DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}', {
@@ -88,8 +90,12 @@ const run = async () => {
           package_version_id: version.id
         }).then((status) => {
           console.log(`Status: ${status.status}`);
+        }).catch((reason) => {
+          console.error(`Error: ${reason}`)
         }));
       } else {
+        console.log(`  ORG: ${org_user}`)
+
         deletion_promises.push(octokit.request('DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}', {
           package_type: 'container',
           package_name: packageName,
@@ -97,6 +103,8 @@ const run = async () => {
           package_version_id: version.id
         }).then((status) => {
           console.log(`Status: ${status.status}`);
+        }).catch((reason) => {
+          console.error(`Error: ${reason}`)
         }));
       }
     }
