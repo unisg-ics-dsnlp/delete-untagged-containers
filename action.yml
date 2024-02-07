@@ -14,7 +14,7 @@ inputs:
     description: 'The name of the user that the container lives under.  Will default to the user of the repo that the payload trigger comes from.'
     required: false
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
 branding:
   icon: delete
