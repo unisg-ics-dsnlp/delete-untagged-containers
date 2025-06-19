@@ -4,9 +4,9 @@ const github = require('@actions/github');
 const run = async () => {
   try {
     const packageName = core.getInput('package_name');
-    const context     = github.context;
-    const token       = core.getInput('token');
-    const octokit     = github.getOctokit(token)
+    const context = github.context;
+    const token = core.getInput('token');
+    const octokit = github.getOctokit(token)
 
     octokit.hook.error("request", async (error, options) => {
       throw error;
@@ -45,8 +45,8 @@ const run = async () => {
     // Note that the API will paginate responses so we need to make sure to
     // traverse all pages
     var current_page = 1;
-    var last_page    = 1;
-    var versions     = [];
+    var last_page = 1;
+    var versions = [];
 
     do {
       console.log(`Getting package versions page ${current_page}`);
@@ -59,14 +59,14 @@ const run = async () => {
         page: current_page,
         per_page: 100
       });
-  
+
       if (typeof versionsResponse.headers.link == 'string') {
         // Parse out the page info and update current page to next page 
         match = versionsResponse.headers.link.match(/\?page=(\d+).*\?page=(\d+)/);
         current_page = match[1]; // set to next
         last_page = match[2];    // set to last
       }
-  
+
       // Add the versions to our list
       versions = versions.concat(versionsResponse.data);
     } while (current_page != last_page);
@@ -112,7 +112,7 @@ const run = async () => {
     await Promise.all(deletion_promises)
 
     console.log("Done")
-    
+
   } catch (error) {
     core.setFailed(error.message);
   }

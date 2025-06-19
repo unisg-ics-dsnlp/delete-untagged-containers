@@ -1,5 +1,17 @@
 # Delete untagged containers
 
+<!--toc:start-->
+- [Delete untagged containers](#delete-untagged-containers)
+  - [Inputs](#inputs)
+    - [`package_name`](#packagename)
+    - [`token`](#token)
+    - [`org`](#org)
+    - [`user`](#user)
+  - [Example usage](#example-usage)
+    - [Github Actions](#github-actions)
+    - [Personal Access token](#personal-access-token)
+<!--toc:end-->
+
 Deletes containers that do not have tags from [Github container registry](https://docs.github.com/en/packages/guides/about-github-container-registry) (ghcr.io)
 
 Note that this has not been fully tested with non-user orgs as the APIs differ. Use at your own risk
@@ -36,7 +48,7 @@ on:
   workflow_dispatch:
     inputs:
       package_name:
-        description: 'The name of the package to delete'     
+        description: "The name of the package to delete"
         required: true
 
 jobs:
@@ -44,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: purge packages
-        uses: dylanratcliffe/delete-untagged-containers@main
+        uses: unisg-ics-dsnlp/delete-untagged-containers@main
         with:
           package_name: ${{ github.event.inputs.package_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -54,9 +66,9 @@ jobs:
 
 This example uses a [personal access token](https://docs.github.com/en/enterprise-server@3.3/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the following permissions:
 
-* `read:packages`
-* `write:packages`
-* `delete:packages`
+- `read:packages`
+- `write:packages`
+- `delete:packages`
 
 ```yaml
 name: Remove old package versions
@@ -64,7 +76,7 @@ on:
   workflow_dispatch:
     inputs:
       package_name:
-        description: 'The name of the package to delete'     
+        description: "The name of the package to delete"
         required: true
 
 jobs:
@@ -72,9 +84,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: purge packages
-        uses: dylanratcliffe/delete-untagged-containers@main
+        uses: unisg-ics-dsnlp/delete-untagged-containers@main
         with:
           package_name: ${{ github.event.inputs.package_name }}
           # This is a person access token
           token: ${{ secrets.CR_PAT }}
 ```
+
