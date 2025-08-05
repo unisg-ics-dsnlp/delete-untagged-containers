@@ -1,6 +1,6 @@
 {
   "name": "delete-untagged-container",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
     "@actions/core": "1.11.1",
     "@actions/github": "6.0.1",
     "@octokit/action": "8.0.2",
-    "@octokit/core": "7.0.2"
+    "@octokit/core": "7.0.3"
   }
 }
