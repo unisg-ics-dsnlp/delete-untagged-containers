@@ -1,18 +1,15 @@
 {
   "name": "delete-untagged-container",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@actions/core": "1.11.1",
     "@actions/github": "6.0.1",
-    "@octokit/action": "8.0.2",
-    "@octokit/core": "7.0.3"
+    "@octokit/action": "8.0.4",
+    "@octokit/core": "7.0.6"
   }
 }
